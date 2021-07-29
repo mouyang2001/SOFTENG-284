@@ -5,7 +5,6 @@
 # > diff myout1.txt canvas.out1
 
 import sys
-import re
 
 # more efficient solution O(n)
 def find_max_profit(prices, length):
@@ -22,8 +21,9 @@ def find_max_profit(prices, length):
 
 # driver code stdin/stdout
 for line in sys.stdin:
-  prices = list(map(int, re.findall('\d+', line)))
+  prices = [int(s) for s in line.split() if s.isdigit()]
   length = prices.pop(0)
   if length >= 2:
     sys.stdout.write(str(find_max_profit(prices, length)) + '\n')
+  
 
