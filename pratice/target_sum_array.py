@@ -1,5 +1,5 @@
 def target_sum_brute_force(target, nums):
-  for i in range(target):
+  for i in range(len(nums)):
     for j in range(i+1, len(nums)):
       if (nums[i]+nums[j] == target):
         print(nums[i], nums[j])
@@ -31,18 +31,16 @@ nums = [1,2,3,3,5,7,8]
 target=6
 print(target_sum_n_log_n(target, nums))
 
-def target_sum_n(target, nums):
-  complement = {}
-  for n in nums:
-    c = target-n
-    if (c in complement):
-      print(n, c)
-      return "found"
+def twoSum(target, nums):
+  nums_map = {}
+  for i in range(len(nums)):
+    c = target-nums[i]
+    if (c in nums_map):
+      return [i, nums_map.get(c)]
     else:
-      complement[n] = c
-
+      nums_map[nums[i]] = i
   return "none"
 
-nums = [6,3,5,3,4,7,8,1]
-target = 6
-print(target_sum_n(target, nums))
+nums = [2,7,11,15]
+target = 9
+print(twoSum(target, nums))
