@@ -1,7 +1,7 @@
 # Author: Matthew Ouyang
 # Task: find the number of wire intersection points
 # Commands to execute code:
-# > python3 q4.py < canvas.in > myout.txt
+# > python3 task1.py3 < canvas.in > myout.txt
 # > diff myout.txt canvas.out
 
 import sys
@@ -16,7 +16,6 @@ def find_crosses(height, wires):
         wires_map[wire[0]] = wire[1]
 
     i_sort = sorted([x[0] for x in wires])
-    j_sort = sorted([x[1] for x in wires])
 
     # bottom up approach
     n = len(i_sort)
@@ -30,12 +29,10 @@ def find_crosses(height, wires):
 
 # driver code stdin/stdout
 first_read = False
-scenarios = 0
 for line in sys.stdin:
     # ignore first line
     if first_read == False:
         first_read = True
-        scenarios = int(line)
         continue
     
     # split the line by tower height and wire tuple
