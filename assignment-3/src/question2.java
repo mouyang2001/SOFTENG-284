@@ -8,6 +8,7 @@ public class question2 {
         Scanner scanner = new Scanner(System.in);
 
         while (scanner.hasNext()) {
+            // Get data and put in Arraylist<ArrayList<Integer>> format
             int order = Integer.parseInt(scanner.nextLine());
             ArrayList<ArrayList<Integer>> adjacencyList = new ArrayList<>();
 
@@ -25,6 +26,10 @@ public class question2 {
             }
 
             System.out.println(adjacencyList);
+
+            // reverse adjacencyList
+
+            // output it, remember '[]' just output '\n'
         }
     }
 }
