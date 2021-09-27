@@ -7,14 +7,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (scanner.hasNext()) {
+            // clean data
             String[] data = scanner.nextLine().split(",");
-            System.out.println(Arrays.toString(data));
-
             int[] numbers = new int[data.length];
-            for (int i = 0; i < data.length; i++) {
-                numbers[i] = Integer.parseInt(data[i]);
-            }
+            for (int i = 0; i < data.length; i++) numbers[i] = Integer.parseInt(data[i]);
 
+            // hash params
             int size = numbers[0];
             int p = numbers[1];
 
