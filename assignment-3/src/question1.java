@@ -27,7 +27,7 @@ public class question1 {
                 if (LPTable[index] != 0) a++; // upon insertion
                 while (LPTable[index] != 0) { // additional probes
                     b++;
-                    index--;
+                    index = (index == 0) ? size-1 : index-1;
                 }
                 LPTable[index] = numbers[i];
             }
