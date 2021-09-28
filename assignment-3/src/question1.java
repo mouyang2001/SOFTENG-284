@@ -1,69 +1,77 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class question1 {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        while (scanner.hasNext()) {
-            // clean data
-            String[] data = scanner.nextLine().split(",");
-            int[] numbers = new int[data.length];
-            for (int i = 0; i < data.length; i++) numbers[i] = Integer.parseInt(data[i]);
+        try {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
 
-            // hash params
-            int size = numbers[0];
-            int p = numbers[1];
+                int[] numbers = new int[data.length];
+                for (int i = 0; i < data.length; i++) numbers[i] = Integer.parseInt(data[i]);
 
-            // output tracking
-            int a = 0;
-            int b = 0;
-            int c = 0;
-            int d = 0;
+                // hash params
+                int size = numbers[0];
+                int p = numbers[1];
 
-            // initiate LPTable & DHTable
-            ArrayList<Integer> LPTable = new ArrayList<>();
-            ArrayList<Integer> DHTable = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                LPTable.add(null);
-                DHTable.add(null);
-            }
+                // output tracking
+                int a = 0;
+                int b = 0;
+                int c = 0;
+                int d = 0;
 
-            // linear probing
-            for (int i = 2; i < numbers.length; i++) {
-                int index = primaryHash(numbers[i], size); // calculate hash
+                // initiate LPTable & DHTable
+                ArrayList<Integer> LPTable = new ArrayList<>();
+                ArrayList<Integer> DHTable = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    LPTable.add(null);
+                    DHTable.add(null);
+                }
 
-                if (LPTable.get(index) != null) a++; // collision on insertion
+                // linear probing
+                for (int i = 2; i < numbers.length; i++) {
+                    int index = primaryHash(numbers[i], size); // calculate hash
 
-                while (LPTable.get(index) != null) {
-                    index = Math.floorMod(index - 1, size);
+                    if (LPTable.get(index) != null) a++; // collision on insertion
+
+                    while (LPTable.get(index) != null) {
+                        index = Math.floorMod(index - 1, size);
+                        if (i == numbers.length - 1) b++;
+                    }
+
                     if (i == numbers.length - 1) b++;
+                    LPTable.set(index, numbers[i]);
                 }
 
-                if (i == numbers.length - 1) b++;
-                LPTable.set(index, numbers[i]);
-            }
+                // double hashing
+                for (int i = 2; i < numbers.length; i++) {
+                    int index = primaryHash(numbers[i], size);
+                    int secondaryHash = 0;
 
-            // double hashing
-            for (int i = 2; i < numbers.length; i++) {
-                int index = primaryHash(numbers[i], size);
-                int secondaryHash = 0;
+                    if (DHTable.get(index) != null) {
+                        secondaryHash = secondaryHash(numbers[i], p);
+                        c++;
+                    }
 
-                if (DHTable.get(index) != null) {
-                    secondaryHash = secondaryHash(numbers[i], p);
-                    c++;
-                }
+                    while (DHTable.get(index) != null) {
+                        if (i == numbers.length - 1) d++;
+                        index = Math.floorMod(index - secondaryHash, size);
+                    }
 
-                while (DHTable.get(index) != null) {
                     if (i == numbers.length - 1) d++;
-                    index = Math.floorMod(index - secondaryHash, size);
+                    DHTable.set(index, numbers[i]);
                 }
 
-                if (i == numbers.length - 1) d++;
-                DHTable.set(index, numbers[i]);
+                System.out.printf("%d,%d,%d,%d\n", a, b, c, d);
             }
-
-            System.out.printf("%d,%d,%d,%d\n", a, b, c, d);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
