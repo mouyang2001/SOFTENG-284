@@ -1,35 +1,41 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class question2 {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String line;
 
-        while (scanner.hasNext()) {
-            // Get data and put in Arraylist<ArrayList<Integer>> format
-            int order = Integer.parseInt(scanner.nextLine());
-            ArrayList<ArrayList<Integer>> adjacencyList = new ArrayList<>();
+        try {
+            while ((line = reader.readLine()) != null) {
+                // Get data and put in Arraylist<ArrayList<Integer>> format
+                int order = Integer.parseInt(line);
+                ArrayList<ArrayList<Integer>> adjacencyList = new ArrayList<>();
 
-            for (int i = 0; i < order; i++) {
-                String[] data = scanner.nextLine().split(" ");
-                ArrayList<Integer> arcs = new ArrayList<>();
+                for (int i = 0; i < order; i++) {
+                    String[] data = reader.readLine().split(" ");
+                    ArrayList<Integer> arcs = new ArrayList<>();
 
-                if (!Objects.equals(data[0], "")) {
-                    for (String value : data) {
-                        arcs.add(Integer.valueOf(value));
+                    if (!Objects.equals(data[0], "")) {
+                        for (String value : data) {
+                            arcs.add(Integer.valueOf(value));
+                        }
                     }
+
+                    adjacencyList.add(i, arcs);
                 }
 
-                adjacencyList.add(i, arcs);
+                System.out.println(adjacencyList);
+
+                // reverse adjacencyList
+
+                // output it, remember '[]' just output '\n'
             }
-
-            System.out.println(adjacencyList);
-
-            // reverse adjacencyList
-
-            // output it, remember '[]' just output '\n'
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
