@@ -11,28 +11,38 @@ public class question2 {
 
         try {
             while ((line = reader.readLine()) != null) {
-                // Get data and put in Arraylist<ArrayList<Integer>> format
+
+                // Get the order of the graph.
                 int order = Integer.parseInt(line);
-                ArrayList<ArrayList<Integer>> adjacencyList = new ArrayList<>();
 
-                for (int i = 0; i < order; i++) {
+                // Create empty adjacency list
+                ArrayList<ArrayList<Integer>> reversed = new ArrayList<>();
+                for (int i = 0; i < order; i++) reversed.add(new ArrayList<>());
+
+                // Populate reversed list
+                for (int u = 0; u < order; u++) {
                     String[] data = reader.readLine().split(" ");
-                    ArrayList<Integer> arcs = new ArrayList<>();
-
                     if (!Objects.equals(data[0], "")) {
                         for (String value : data) {
-                            arcs.add(Integer.valueOf(value));
+                            // (u, v) -> (v, u).
+                            int v = Integer.parseInt(value);
+                            reversed.get(v).add(u);
                         }
                     }
-
-                    adjacencyList.add(i, arcs);
                 }
 
-                System.out.println(adjacencyList);
+                // Output reversed list.
+                System.out.println(order);
+                for (ArrayList<Integer> destinations : reversed) {
+                    for (int i = 0; i < destinations.size(); i++) {
+                        System.out.print(destinations.get(i));
+                        if (i < destinations.size() - 1) {
+                            System.out.print(" ");
+                        }
+                    }
+                    System.out.print("\n");
+                }
 
-                // reverse adjacencyList
-
-                // output it, remember '[]' just output '\n'
             }
         } catch (IOException e) {
             e.printStackTrace();
