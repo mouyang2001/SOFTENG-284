@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class question1 {
@@ -16,43 +17,61 @@ public class question1 {
 
             // output tracking
             int a = 0;
-            int b = 1;
+            int b = 0;
             int c = 0;
-            int d = 1;
+            int d = 0;
+
+            // initiate LPTable & DHTable
+            ArrayList<Integer> LPTable = new ArrayList<>();
+            ArrayList<Integer> DHTable = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                LPTable.add(null);
+                DHTable.add(null);
+            }
 
             // linear probing
-            int[] LPTable = new int[size];
             for (int i = 2; i < numbers.length; i++) {
-                int index = primaryHash(numbers[i], size);
-                if (LPTable[index] != 0) a++; // upon insertion
-                while (LPTable[index] != 0) { // additional probes
-                    b++;
-                    index = (index == 0) ? size-1 : index-1;
+                int index = primaryHash(numbers[i], size); // calculate hash
+
+                if (LPTable.get(index) != null) a++; // collision on insertion
+
+                while (LPTable.get(index) != null) {
+                    index = Math.floorMod(index - 1, size);
+                    if (i == numbers.length - 1) b++;
                 }
-                LPTable[index] = numbers[i];
+
+                if (i == numbers.length - 1) b++;
+                LPTable.set(index, numbers[i]);
             }
 
             // double hashing
-            int[] DHTable = new int[size];
             for (int i = 2; i < numbers.length; i++) {
                 int index = primaryHash(numbers[i], size);
-                if (DHTable[index] != 0) c++; // upon insertion
-                while (DHTable[index] != 0) { // additional probes
-                    d++;
-                    index = secondaryHash(index, p);
+                int secondaryHash = 0;
+
+                if (DHTable.get(index) != null) {
+                    secondaryHash = secondaryHash(numbers[i], p);
+                    c++;
                 }
-                DHTable[index] = numbers[i];
+
+                while (DHTable.get(index) != null) {
+                    if (i == numbers.length - 1) d++;
+                    index = Math.floorMod(index - secondaryHash, size);
+                }
+
+                if (i == numbers.length - 1) d++;
+                DHTable.set(index, numbers[i]);
             }
 
-            System.out.println(a + "," + b + "," + c + "," + d);
+            System.out.printf("%d,%d,%d,%d\n", a, b, c, d);
         }
     }
 
     public static int primaryHash(int x, int m) {
-        return x % m;
+        return Math.floorMod(x, m);
     }
 
     public static int secondaryHash(int x, int p) {
-        return (x % p) + 1;
+        return Math.floorMod(x, p) + 1;
     }
 }
