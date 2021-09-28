@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class question1 {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String line;
 
         try {
-            String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
 
