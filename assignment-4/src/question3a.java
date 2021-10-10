@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Stack;
 
+/**
+ * Finds the number of connected components in a graph, by counting number of DFS search forests.
+ * @author Matthew Ouyang
+ */
 public class question3a {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -31,10 +35,10 @@ public class question3a {
                         }
                     }
                 }
-                
+
+                // Find number of connected components in graph.
                 int[] visited = new int[order];
                 int numComponents = 0;
-
                 for (int v = 0; v < order; v++) {
                     if (visited[v] == 0) {
                         DFS(v, visited, adjList);
@@ -50,6 +54,12 @@ public class question3a {
 
     }
 
+    /**
+     * Iterative DFS algorithm using stack.
+     * @param s root node.
+     * @param visited integer array tracking visited and unvisited nodes based on index.
+     * @param adjList graph represented in adjacency list form.
+     */
     public static void DFS(int s, int[] visited, ArrayList<ArrayList<Integer>> adjList) {
         Stack<Integer> stack = new Stack<>();
 
