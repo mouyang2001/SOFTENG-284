@@ -37,16 +37,17 @@ public class question3a {
                 }
 
                 // Find number of connected components in graph.
-                int[] visited = new int[order];
-                int numComponents = 0;
-                for (int v = 0; v < order; v++) {
-                    if (visited[v] == 0) {
-                        DFS(v, visited, adjList);
-                        numComponents++;
+                if (!adjList.isEmpty()) {
+                    int[] visited = new int[order];
+                    int numComponents = 0;
+                    for (int v = 0; v < order; v++) {
+                        if (visited[v] == 0) {
+                            DFS(v, visited, adjList);
+                            numComponents++;
+                        }
                     }
+                    System.out.println(numComponents);
                 }
-
-                System.out.println(numComponents);
             }
         } catch (IOException e) {
             e.printStackTrace();
